@@ -1,0 +1,168 @@
+drop sequence userseq;
+drop table users purge;
+
+create sequence userseq nocache;
+create table users(
+  unum number primary key,
+  id varchar2(15) not null,
+  password varchar2(15) not null,
+  name varchar2(20) not null,
+  address1 varchar2(100),
+  address2 varchar2(50),
+  email varchar2(30),
+  hp1 varchar2(3),
+  hp2 varchar2(4),
+  hp3 varchar2(4),
+  birth varchar2(20)
+);
+
+insert into users
+values(userseq.nextval, 'admin', '1234', '어드민', '서울특별시 마포구 월드컵북로 21 풍성빌딩', '201호', 'admin@naver.com', '010', '1234', '5678', '1997-01-01') ;
+insert into users
+values(userseq.nextval, 'hong', '1234', '홍길동', '서울특별시 마포구 월드컵북로 21 풍성빌딩', '101호', 'hong@naver.com', '010', '4321', '9876', '1999-01-01') ;
+
+drop sequence cateseq;
+drop table categories cascade CONSTRAINTS;
+
+create sequence cateseq nocache;
+create table categories(
+  cnum number primary key,
+  cname varchar2(30) unique
+  );
+  
+insert into categories values(cateseq.nextval, '육가공품');
+insert into categories values(cateseq.nextval, '음료');
+insert into categories values(cateseq.nextval, '베이커리');
+insert into categories values(cateseq.nextval, '조미료');
+insert into categories values(cateseq.nextval, '소스류');
+insert into categories values(cateseq.nextval, '식용유');
+insert into categories values(cateseq.nextval, '통조림류');
+insert into categories values(cateseq.nextval, '분말 가공품');
+insert into categories values(cateseq.nextval, '유제품');
+
+drop sequence proseq;
+drop table products purge;
+
+create sequence proseq nocache;
+create table products(
+ pnum number primary key,
+ pname varchar2(50),
+ category varchar2(30),
+ company varchar2(30),
+ price number,
+ weight number,
+ stock number,
+ origin varchar2(100),
+ pimage varchar2(50),
+ uploaddate varchar2(30),
+ purchasecnt number
+ );
+ 
+insert into products
+values(proseq.nextval, '대경 포크 소시지 냉동', '육가공품', '대상', 9600, 900, 10, '경기도 여주시 산북면', 'sausage.webp', '2023-10-27 14:29:09', 10);
+insert into products
+values(proseq.nextval, '맥심 TOP 돌체라떼 24입', '음료', '더가온', 23900, 6600, 5, '경기 포천시 소흘읍', 'coffee.webp', '2023-10-27 16:08:10', 8);
+
+insert into products
+values(proseq.nextval, 'DGF 푸흐아이데 크로와상 20입', '베이커리', '마켓빌더즈코리아', 18000, 1400, 7, '서울 송파구 송파대로', 'croissants.webp', '2023-10-26 08:29:09', 7);
+insert into products
+values(proseq.nextval, '대상 미원 아미노산', '조미료', '대상', 27900, 2000, 15, '서울 종로구 창경궁로', 'msg.webp', '2023-09-08 11:35:45', 9);
+
+insert into products
+values(proseq.nextval, '청정원 고소한 마요네즈', '소스류', '대상', 12900, 3200, 2, '서울 종로구 창경궁로', 'mayo.webp', '2021-01-11 21:01:23', 15);
+insert into products
+values(proseq.nextval, '해표 식용유', '식용유', '천마하나로', 6200, 1800, 20, '충북 청주시 청원구', 'oil.webp', '2022-03-05 15:01:30', 20);
+
+insert into products
+values(proseq.nextval, 'CJ)스팸클래식', '통조림류', '미종합유통', 3650, 300, 27, '경기 화성시 매송면', 'spam.webp', '2023-02-14 04:27:48', 50);
+insert into products
+values(proseq.nextval, '곰표 중력 밀가루 다목적용', '분말 가공품', '에이치씨인터내셔널', 3350, 2500, 50, '대전 동구 물류로', 'flour.webp', '2020-10-12 12:25:17', 30);
+
+insert into products
+values(proseq.nextval, '농우 훈제오리 슬라이스', '육가공품', '빙채', 8500, 800, 32, '서울 송파구 양재대로', 'duck.webp', '2022-08-09 19:22:15', 2);
+insert into products
+values(proseq.nextval, '롯데칠성 칠성사이다 20입', '음료', '서원에프엠씨지', 17900, 10000, 67, '경기 광주시 초월읍', 'cider.webp', '2023-07-14 20:11:54', 4);
+
+drop table board purge ;
+create table board(
+	num number not null primary key,
+	writer varchar2(10) not null,
+	email varchar2(10),
+	subject varchar2(20) not null,
+	passwd varchar2(12) not null,
+	reg_date date not null,
+	readcount int default 0,
+	ref number  default 0 not null,
+	re_step number default 0 not null,
+	re_level number default 0 not null,
+	content varchar2(500) not null,
+	ip varchar2(15)  not null
+);
+
+drop sequence board_seq ;
+create sequence board_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+insert into board(num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip)
+values(board_seq.nextval,'a1','a1','a1','1234','2015-1-1',1,0,0,'내용1','127.0.0.1');
+
+
+
+insert into board(num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip)
+values(board_seq.nextval,'a2','a2','a2','1234','2015-1-1',2,0,0,'내용2','127.0.0.1');
+
+insert into board(num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip)
+values(board_seq.nextval,'a21','a21','a21','1234','2015-1-1',2,4,1,'내용21','127.0.0.1');
+
+insert into board(num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip)
+values(board_seq.nextval,'a22','a22','a22','1234','2015-1-1',2,1,1,'내용22','127.0.0.1');
+
+insert into board(num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip)
+values(board_seq.nextval,'a221','a221','a221','1234','2015-1-1',2,3,2,'내용221','127.0.0.1');
+
+insert into board(num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip)
+values(board_seq.nextval,'a222','a222','a222','1234','2015-1-1',2,2,2,'내용222','127.0.0.1');
+
+
+
+insert into board(num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip)
+values(board_seq.nextval,'a3','a3','a3','1234','2015-1-1',7,0,0,'내용3','127.0.0.1');
+
+insert into board(num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip)
+values(board_seq.nextval,'a31','a31','a31','1234','2015-1-1',7,6,1,'내용31','127.0.0.1');
+
+insert into board(num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip)
+values(board_seq.nextval,'a311','a311','a311','1234','2015-1-1',7,7,2,'내용311','127.0.0.1');
+
+insert into board(num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip)
+values(board_seq.nextval,'a32','a32','a32','1234','2015-1-1',7,2,1,'내용32','127.0.0.1');
+
+insert into board(num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip)
+values(board_seq.nextval,'a321','a321','a321','1234','2015-1-1',7,5,2,'내용321','127.0.0.1');
+
+insert into board(num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip)
+values(board_seq.nextval,'a322','a322','a322','1234','2015-1-1',7,3,2,'내용322','127.0.0.1');
+
+insert into board(num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip)
+values(board_seq.nextval,'a3221','a3221','a3221','1234','2015-1-1',7,4,3,'내용3221','127.0.0.1');
+
+insert into board(num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip)
+values(board_seq.nextval,'a33','a33','a33','1234','2015-1-1',7,1,1,'내용33','127.0.0.1');
+
+drop sequence orderseq ;
+create sequence orderseq ;  
+
+drop table orders purge ;
+create table orders(
+  onum number primary key,
+	ordername varchar2(15),
+  orderaddress varchar2(150),
+  pname varchar2(500),
+	amount number
+);
+
+commit;
